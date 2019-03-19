@@ -83,8 +83,11 @@ if [[ "${ROLE}" == 'Master' ]]; then
     add-apt-repository "deb http://cran.r-project.org/bin/linux/ubuntu ${OS_CODE}-cran35/"
     rstudio_server_package=rstudio-server-${RSTUDIO_VERSION}-amd64.deb
   else
+    # public key for the cran repo
     run_with_retries apt-key adv --no-tty --keyserver keys.gnupg.net --recv-key E19F5F87128899B192B1A2C2AD5F960A256A04AF
-    add-apt-repository "deb http://cran.r-project.org/bin/linux/debian ${OS_CODE}-cran34/"
+    # public key for verifying the rstudio deb file
+    run_with_retries apt-key adv --no-tty --keyserver keys.gnupg.net --recv-key 3F32EE77E331692F
+    add-apt-repository "deb http://cran.r-project.org/bin/linux/debian ${OS_CODE}-cran35/"
     rstudio_server_package=rstudio-server-${OS_CODE}-${RSTUDIO_VERSION}-amd64.deb
   fi
   update_apt_get
